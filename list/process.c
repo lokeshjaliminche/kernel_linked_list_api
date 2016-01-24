@@ -82,22 +82,63 @@ int main(int argc, char **argv){
 		 printf("number= %d name= %s\n", tmp->number, tmp->name);
 		 printf("can we use this process?\n1.yes\n2.no\n3.not_sure\nEnter your choice.\n");
 		 scanf("%d",&choice);
-		tmp1= (struct process *)malloc(sizeof(struct process));
 		if (choice == 1) {
 			printf("adding process to using state\n ");
-		list_add(&(tmp1->using), &(my_process.using));
+		list_add(&(tmp->using), &(my_process.using));
 		} else if (choice == 2) {
 			printf("adding process to waiting state\n ");
-		list_add(&(tmp1->waiting), &(my_process.waiting));
+		list_add(&(tmp->waiting), &(my_process.waiting));
 		} else {
 			printf("adding process to available  state\n ");
-		list_add(&(tmp1->available), &(my_process.available));
+		list_add(&(tmp->available), &(my_process.available));
 		}
 
 	}
 	printf("\n");
 		 printf("traversing waiting process list\n");
+		 list_for_each(pos, &my_process.waiting){
+	/* at this point: pos->next points to the next item's 'waiting' variable and 
+	 * pos->prev points to the previous item's 'waiting' variable. Here item is 
+	 * of type struct process. But we need to access the item itself not the 
+	 * variable 'waiting' in the item! macro list_entry() does just that. See "How
+	 * does this work?" below for an explanation of how this is done.
+	 */
+			tmp= list_entry(pos, struct process, waiting);
+			printf("number= %d name= %s\n", tmp->number, tmp->name);
+		 }
 		 printf("traversing using process list\n");
+		 list_for_each(pos, &my_process.using){
+	/* at this point: pos->next points to the next item's 'waiting' variable and 
+	 * pos->prev points to the previous item's 'waiting' variable. Here item is 
+	 * of type struct process. But we need to access the item itself not the 
+	 * variable 'waiting' in the item! macro list_entry() does just that. See "How
+	 * does this work?" below for an explanation of how this is done.
+	 */
+			tmp= list_entry(pos, struct process, using);
+			printf("number= %d name= %s\n", tmp->number, tmp->name);
+		 }
 		 printf("tracersing  available process list\n");
+			 list_for_each(pos, &my_process.available){
+	/* at this point: pos->next points to the next item's 'waiting' variable and 
+	 * pos->prev points to the previous item's 'waiting' variable. Here item is 
+	 * of type struct process. But we need to access the item itself not the 
+	 * variable 'waiting' in the item! macro list_entry() does just that. See "How
+	 * does this work?" below for an explanation of how this is done.
+	 */
+			tmp= list_entry(pos, struct process, available);
+			printf("number= %d name= %s\n", tmp->number, tmp->name);
+		 }
+		 printf("tracersing  available process list\n");
+			 list_for_each(pos, &my_process.existing){
+	/* at this point: pos->next points to the next item's 'waiting' variable and 
+	 * pos->prev points to the previous item's 'waiting' variable. Here item is 
+	 * of type struct process. But we need to access the item itself not the 
+	 * variable 'waiting' in the item! macro list_entry() does just that. See "How
+	 * does this work?" below for an explanation of how this is done.
+	 */
+			tmp= list_entry(pos, struct process, existing);
+			printf("number= %d name= %s\n", tmp->number, tmp->name);
+		 }
+
 }
 
